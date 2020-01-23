@@ -16,10 +16,23 @@ class DatabaseSeeder extends Seeder
         //$this->call(CandidatesTableSeeder::class);
         //$this->call(JobsTableSeeder::class);
 
-       foreach( CandidatesModel::all() as $candidate){
-           print 'Candidate: '.$candidate ->first_name .' '.$candidate ->surname.PHP_EOL;
-           print 'Candidate Email: '.$candidate ->email_address.PHP_EOL;
-           print '----------------'.PHP_EOL;
-       }
+        foreach (CandidatesModel::all() as $candidate) {
+            print 'Candidate: ' . $candidate->first_name . ' ' . $candidate->surname . PHP_EOL;
+            print 'Candidate Email: ' . $candidate->email_address . PHP_EOL;
+            print PHP_EOL;
+
+            $jobs = JobsModel::where('candidates_id', $candidate->id)
+                ->get()
+                ->sortByDesc(function ($job,$key){
+                    return date_parse ($job->end_date);
+                });
+        
+            foreach ($jobs as $job) {
+                print 'Job: ' . $job->job_title . ' - ' . $job->company_name . PHP_EOL;
+                print 'Job Duration: ' . $job->start_date . ' to ' . $job->end_date . PHP_EOL;
+                print PHP_EOL;
+            }
+            print '----------------' . PHP_EOL;
+        }
     }
 }
