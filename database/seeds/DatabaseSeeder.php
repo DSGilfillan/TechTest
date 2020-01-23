@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(CandidatesTableSeeder::class);
-        //$this->call(JobsTableSeeder::class);
+        $this->call(CandidatesTableSeeder::class);
+        $this->call(JobsTableSeeder::class);
 
         foreach (CandidatesModel::all() as $candidate) {
             print 'Candidate: ' . $candidate->first_name . ' ' . $candidate->surname . PHP_EOL;
