@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //$this->call(CandidatesTableSeeder::class);
-        //$this->call(JobsTableSeeder::class);
+        $this->call(CandidatesTableSeeder::class);
+        $this->call(JobsTableSeeder::class);
 
         foreach (CandidatesModel::all() as $candidate) {
             print 'Candidate: ' . $candidate->first_name . ' ' . $candidate->surname . PHP_EOL;
@@ -22,10 +22,8 @@ class DatabaseSeeder extends Seeder
             print PHP_EOL;
 
             $jobs = JobsModel::where('candidates_id', $candidate->id)
-                ->get()
-                ->sortByDesc(function ($job,$key){
-                    return date_parse ($job->end_date);
-                });
+                ->orderBy('end_date', 'desc')
+                ->get();
         
             foreach ($jobs as $job) {
                 print 'Job: ' . $job->job_title . ' - ' . $job->company_name . PHP_EOL;

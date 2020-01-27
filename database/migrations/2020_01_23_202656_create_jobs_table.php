@@ -18,8 +18,8 @@ class CreateJobsTable extends Migration
             $table->unsignedBigInteger('candidates_id');
             $table->string('job_title');
             $table->string('company_name');
-            $table->string('start_date');
-            $table->string('end_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
 
             $table->foreign('candidates_id')->references('id')->on('candidates');
         });
